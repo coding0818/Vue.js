@@ -1,10 +1,13 @@
 <template>
   <main>
-    <ul></ul>
+    <ul>
+      <Item />
+    </ul>
   </main>
 </template>
 <script>
 import Item from "./Item.vue";
+import { useStore } from "vuex";
 export default {
   name: "Main",
   components: {
