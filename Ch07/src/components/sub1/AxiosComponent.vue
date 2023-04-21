@@ -66,9 +66,10 @@
     </table>
   </form>
 </template>
+
 <script setup>
 import axios from "axios";
-import { ref, reactive } from "vue";
+import { reactive, ref } from "vue";
 
 const users = ref([]);
 const inputText = ref("");
@@ -135,6 +136,7 @@ const btnGetUser1 = () => {
       console.log(error);
     });
 };
+
 const btnGetUser2 = async () => {
   const jsonData = { uid: inputText.value };
   try {
@@ -168,7 +170,7 @@ const registerUser = () => {
     responseType: "json",
   })
     .then((response) => {
-      console.log(response);
+      console.log(response.data);
       const data = response.data;
 
       if (data.result > 0) {

@@ -66,7 +66,7 @@
       </tr>
       <tr>
         <td colspan="2" align="right">
-          <input type="submit" value="등록" />
+          <input type="submit" value="수정" />
         </td>
       </tr>
     </table>
@@ -76,6 +76,7 @@
   <input type="text" v-model="inputText" />
   <button v-on:click="btnDeleteUser">User 삭제</button>
 </template>
+
 <script setup>
 import axios from "axios";
 import { onBeforeMount, ref, reactive } from "vue";
@@ -105,11 +106,12 @@ const btnGetUser = async () => {
   }
 };
 
+// axios put 전송 데이터 수신을 위해 백엔드(스프링부트)에서 꼭 @RequestBody 선언으로 데이터 수신
 const registerUser = () => {
   axios
     .post("http://localhost:8080/Ch09/user1", user)
     .then((response) => {
-      console.log(response);
+      console.log(response.data);
       const data = response.data;
 
       if (data.result > 0) {
@@ -127,12 +129,20 @@ const modifyUser = () => {
   axios
     .put("http://localhost:8080/Ch09/user1", user)
     .then((response) => {
-      console.log(response);
-      const data = response.data;
+      console.log(response.data);
+      users.value = response.data;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
 
-      if (data.result > 0) {
-        alert("수정완료!");
-      }
+const btnDeleteUser = () => {
+  axios
+    .delete(`http://localhost:8080/Ch09/user1/${inputText.value}`)
+    .then((response) => {
+      console.log(response.data);
+      users.value = response.data;
     })
     .catch((error) => {
       console.log(error);
